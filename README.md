@@ -20,7 +20,7 @@ Type fronPath(const char *path);                | Type fromPath(const char *path
 ---------------------------------------------------------------------------------------------
 // type_definition.cpp                          | // type_definition.cpp
 ---------------------------------------------------------------------------------------------
-#include <nlohmann/json.hpp>                    | #define MI_JSON_STRUCT_IMPLEMENT
+#include <nlohmann/json.hpp>                    | #define MI_JSON_STRUCT_IMPL
 #include "type_definition.hpp"                  | #include "type_definition.hpp"
 // Repetition, if the "Type" struct changes,    | 
 // this needs to be updated also                |
@@ -74,6 +74,6 @@ Defines three simple self-explanatory macros.
 
 The `<nlohmann/json.hpp>` header is only included if the directive:
 ```cpp
-#define MI_JSON_STRUCT_IMPLEMENT
+#define MI_JSON_STRUCT_IMPL
 ```
 is defined.
