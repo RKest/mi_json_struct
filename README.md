@@ -32,7 +32,7 @@ Type fronPath(const char *path)                 | Type fromPath(const char* path
     return j.get<Type>();                       |     return j.get<Type>();
 }                                               | }
 ```
-The `#include <mi/json_struct.hpp>` is lightweight, as opposed to `<nlohmann/json.hpp>`\
+The `#include <mi_json_struct.hpp>` is lightweight, as opposed to `<nlohmann/json.hpp>`\
 Therefore, usually it is beneficial, to only include the latter in a single source file with all the type definitions.
 
 >#### More granularity
