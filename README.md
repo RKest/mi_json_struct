@@ -48,7 +48,7 @@ struct ThreadsNumber
     friend inline void from_json(const nlohmann::json& j, ThreadsNumber& number)
     {
         int new_value = j.get<int>();
-        number.i = new_value > 0 ? new_value : std::thread::hardware_concurrency();
+        number.value = new_value > 0 ? new_value : std::thread::hardware_concurrency();
     }
 };
 ```
