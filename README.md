@@ -21,6 +21,7 @@ Type fronPath(const char *path);                | Type fromPath(const char *path
 // type_definition.cpp                          | // type_definition.cpp
 ---------------------------------------------------------------------------------------------
 #include <nlohmann/json.hpp>                    | #define MI_JSON_STRUCT_IMPL
+#include <fstream>                              | #include <fstream>
 #include "type_definition.hpp"                  | #include "type_definition.hpp"
 // Repetition, if the "Type" struct changes,    | 
 // this needs to be updated also                |
@@ -28,7 +29,8 @@ NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(Type, a, b)  |
                                                 |
 Type fronPath(const char *path)                 | Type fromPath(const char* path)
 {                                               | {
-    auto j = nlohmann::json::parse(path);       |     auto j = nlohmann::json::parse(path);
+    std::ifstream file{path};                   |     std::ifstream file{path};
+    auto j = nlohmann::json::parse(file);       |     auto j = nlohmann::json::parse(file);
     return j.get<Type>();                       |     return j.get<Type>();
 }                                               | }
 ```
