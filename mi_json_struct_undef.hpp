@@ -89,3 +89,9 @@
 #undef MI_STRUCT_WITH_TO_JSON
 
 #undef MI_STRUCT_WITH_FROM_AND_TO_JSON
+
+#undef p_MI_FROM_JSON_IMPL
+#undef p_MI_FROM_JSON
+
+#undef p_MI_TO_JSON_IMPL
+#undef p_MI_TO_JSON
