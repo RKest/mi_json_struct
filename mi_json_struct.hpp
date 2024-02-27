@@ -92,20 +92,20 @@
 #define p_MI_STRINGIZE(X) p_MI_STRINGIZE_IMPL(X)
 
 #ifndef MI_JSON_STRUCT_IMPL
-#define p_MI_FROM_JSON(STRUCT_NAME, ...)
-#define p_MI_TO_JSON(STRUCT_NAME, ...)
+#define p_MI_FROM_JSON(...)
+#define p_MI_TO_JSON(...)
 #else
 
 #include <nlohmann/json.hpp>
 
 #define p_MI_FROM_JSON_IMPL(ARG) nlohmann_json_j.at(p_MI_STRINGIZE(p_MI_SECOND(ARG))).get_to(nlohmann_json_t. p_MI_SECOND(ARG));
-#define p_MI_FROM_JSON(STRUCT_NAME, ...) \
+#define p_MI_FROM_JSON(STRUCT_NAME, ...)                                                                                \
     inline void from_json(const nlohmann::json& nlohmann_json_j, STRUCT_NAME& nlohmann_json_t) {                        \
         p_MI_FOR_EACH(p_MI_FROM_JSON_IMPL, __VA_ARGS__)                                                                 \
     }
 
 #define p_MI_TO_JSON_IMPL(ARG) nlohmann_json_j[p_MI_STRINGIZE(p_MI_SECOND(ARG))] = nlohmann_json_t.p_MI_SECOND(ARG);
-#define p_MI_TO_JSON(STRUCT_NAME, ...) \
+#define p_MI_TO_JSON(STRUCT_NAME, ...)                                                                                  \
     inline void to_json(nlohmann::json& nlohmann_json_j, const STRUCT_NAME& nlohmann_json_t) {                          \
         p_MI_FOR_EACH(p_MI_TO_JSON_IMPL, __VA_ARGS__)                                                                   \
     }
@@ -117,15 +117,21 @@
         p_MI_FOR_EACH(p_MI_JSON_MEMBER, __VA_ARGS__)                                                                    \
     };
 
-#define MI_STRUCT_WITH_FROM_JSON(STRUCT_NAME, ...)                                                                      \
-    p_MI_JSON_STRUCT(STRUCT_NAME, __VA_ARGS__)                                                                          \
-    p_MI_FROM_JSON(STRUCT_NAME, __VA_ARGS__)
-
-#define MI_STRUCT_WITH_TO_JSON(STRUCT_NAME, ...)                                                                        \
-    p_MI_JSON_STRUCT(STRUCT_NAME, __VA_ARGS__)                                                                          \
-    p_MI_TO_JSON(STRUCT_NAME, __VA_ARGS__)
-
-#define MI_STRUCT_WITH_FROM_AND_TO_JSON(STRUCT_NAME, ...)                                                               \
+#define MI_STRUCT_WITH_FROM_JSON(NAMESPACE, STRUCT_NAME, ...)                                                           \
+namespace NAMESPACE {                                                                                                   \
     p_MI_JSON_STRUCT(STRUCT_NAME, __VA_ARGS__)                                                                          \
     p_MI_FROM_JSON(STRUCT_NAME, __VA_ARGS__)                                                                            \
-    p_MI_TO_JSON(STRUCT_NAME, __VA_ARGS__)
+}
+
+#define MI_STRUCT_WITH_TO_JSON(NAMESPACE, STRUCT_NAME, ...)                                                             \
+namespace NAMESPACE {                                                                                                   \
+    p_MI_JSON_STRUCT(STRUCT_NAME, __VA_ARGS__)                                                                          \
+    p_MI_TO_JSON(STRUCT_NAME, __VA_ARGS__)                                                                              \
+}
+
+#define MI_STRUCT_WITH_FROM_AND_TO_JSON(NAMESPACE, STRUCT_NAME, ...)                                                    \
+namespace NAMESPACE {                                                                                                   \
+    p_MI_JSON_STRUCT(STRUCT_NAME, __VA_ARGS__)                                                                          \
+    p_MI_FROM_JSON(STRUCT_NAME, __VA_ARGS__)                                                                            \
+    p_MI_TO_JSON(STRUCT_NAME, __VA_ARGS__)                                                                              \
+}

@@ -8,14 +8,15 @@ Better way of serializing and deserializing [nlohmann::json](https://github.com/
 // type_definition.hpp                            // type_definition.hpp
 --------------------------------------------------------------------------------------------
                                                 | #include <mi_json_struct.hpp>
+namespace ns {                                  |
+    struct Type                                 | MI_STRUCT_WITH_FROM_AND_TO_JSON(
+    {                                           |    ns, Type,
+        int a;                                  |    (int, a),
+        double b;                               |    (double, b)
+    };                                          |  )
+}                                               | 
                                                 |
-struct Type                                     | MI_STRUCT_WITH_FROM_AND_TO_JSON(
-{                                               |    Type,
-    int a;                                      |    (int, a),
-    double b;                                   |    (double, b)
-};                                              | )
-                                                |
-Type fronPath(const char *path);                | Type fromPath(const char *path);
+ns::Type fronPath(const char *path);            | ns::Type fromPath(const char *path);
                                                 |
 ---------------------------------------------------------------------------------------------
 // type_definition.cpp                          | // type_definition.cpp
@@ -27,7 +28,7 @@ Type fronPath(const char *path);                | Type fromPath(const char *path
 // this needs to be updated also                |
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(Type, a, b)  | 
                                                 |
-Type fronPath(const char *path)                 | Type fromPath(const char* path)
+ns::Type fronPath(const char *path)             | ns::Type fromPath(const char* path)
 {                                               | {
     std::ifstream file{path};                   |     std::ifstream file{path};
     auto j = nlohmann::json::parse(file);       |     auto j = nlohmann::json::parse(file);
@@ -56,7 +57,7 @@ struct ThreadsNumber
 ```
 ```cpp
 struct Type                             | MI_STRUCT_WITH_FROM_JSON(
-{                                       |    Type,
+{                                       |    ns, Type,
     ThreadsNubmer threads_number;       |    (ThreadsNumber, threads_number),
     std::string other;                  |    (std::string, other)
 };                                      | )
