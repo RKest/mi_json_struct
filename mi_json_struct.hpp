@@ -92,8 +92,8 @@
 #define p_MI_STRINGIZE(X) p_MI_STRINGIZE_IMPL(X)
 
 #ifndef MI_JSON_STRUCT_IMPL
-#define p_MI_FROM_JSON(...)
-#define p_MI_TO_JSON(...)
+#define p_MI_FROM_JSON(STRUCT_NAME, ...)
+#define p_MI_TO_JSON(STRUCT_NAME, ...)
 #else
 
 #include <nlohmann/json.hpp>
