@@ -1,5 +1,6 @@
 # Mi json struct
 Better way of serializing and deserializing [nlohmann::json](https://github.com/nlohmann/json) objects into and from structs.
+**Though use boost::pfr, if you don't mind slower build times honestly**
 
 ## Motivational examples
 
